@@ -1,5 +1,8 @@
-;; 1.18.scm iterative, logarithmic procedure
-;; to compute a multiplication by repeated addition.
+;; 1.18
+;; Multiplication by repeated addition:
+;; 20 * 6 = ((+ 20 20) (+ 20 20) (+ 20 20))
+;; generates a logarithmic -more time/space efficient-
+;; computation.
 
 (define (multiply a b)
   (cond ((= a 0) 0)
