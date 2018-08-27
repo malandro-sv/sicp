@@ -1,30 +1,67 @@
-(load "../misc/auxiliars.scm")                                     
+(load "../misc/auxiliars.scm") 
+    
+(define (ratio ohm percent)
+    (* ohm (/ percent 100)))
+
+;; I initially called this, "tolerance":
+(define (make-interval ohm percent)
+    (define (bound operator)
+        (operator ohm (ratio ohm percent)))  
+    
+ 11     (cons (bound -)
+(load "../misc/auxiliars.scm") 
+          
+(define (ratio ohm percent)
+    (* ohm (/ percent 100)))
+    
+;; I initially called this, "tolerance":
+(define (make-interval ohm percent)
+    (define (bound operator)
+        (operator ohm (ratio ohm percent)))
+    
+    (cons (bound -)
+(load "../misc/auxiliars.scm") 
 
 (define (ratio ohm percent)
     (* ohm (/ percent 100)))
 
-(define (tolerance ohm percent)
+;; I initially called this, "tolerance":
+(define (make-interval ohm percent)
     (define (bound operator)
-        (operator ohm (ratio ohm percent)))  
-            
-    (list (bound -)
-          (bound +)))
-              
-;; proof of concept: total resistance
-;; for two items only:
+        (operator ohm (ratio ohm percent)))
+    
+    (cons (bound -)
+          (bound +))) 
+           
+;; total rsistance for two items only: 
 (define (pair-allel r1 r2) 
     (/ 1 (+ (/ 1 r1) 
-            (/ 1 r2))))
-
-;; for a list of resitors:
+            (/ 1 r2)))) 
+ 
+;; for a list of resitors: 
 (define (parallel-denominator Rs) 
-  (if (null? Rs) 0
-      (+ (/ 1 (car Rs))
-         (parallel-denominator (cdr Rs)))))
-
+  (if (null? Rs) 0 
+      (+ (/ 1 (car Rs)) 
+         (parallel-denominator (cdr Rs))))) 
+ 
 (define (total-parallel Rs) 
-  (/ 1 (parallel-denominator Rs)))
-                     
-(define (combined-paralls Rs tolers)
-  (tolerance (total-parallel Rs) 
-             (list-average tolers)))
+  (/ 1 (parallel-denominator Rs))) 
+                  
+(define (combined-paralls Rs tolers) 
+  (make-interval (total-parallel Rs) 
+                 (list-average tolers))) 
+ 
+;; (define (make-interval a b) (cons a b)) 
+(define (upper-bound interval) 
+  (cdr interval)) 
+ 
+(define (lower-bound interval) 
+  (car interval)) 
+ 
+(define (bound interval) 
+  (define (selector option) 
+    (cond ((eq? option 'lower)  (car interval)) 
+          ((eq?  option 'upper) (cdr interval)) 
+          (else (display "invalid selector")))) 
+  selector) 
+            
