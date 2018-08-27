@@ -22,7 +22,7 @@
 	 (list-sum term (cdr lst)))))
 
 (define (list-average lst)
-  (/ (sum + lst)
+  (/ (list-sum + lst)
      (length lst)))
 
 (define (sum term a next b)
