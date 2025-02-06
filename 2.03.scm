@@ -1,7 +1,7 @@
 ;; SICP 2.3: Implement a representation for rectangles in a plane.
 ;; GistID:82f97618ae1a1a4145c357a73da30268   
 
-;; I've opted for represent rectangles made out of
+;; I've opted for representing rectangles made out of
 ;; complete line segments.
 
 (define (average a b) (/ (+ a b ) 2))
